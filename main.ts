@@ -1,13 +1,14 @@
 serial.onDataReceived(serial.delimiters(Delimiters.CarriageReturn), function () {
     id = parseFloat(serial.readString())
+    serial.writeLine(convertToText(id))
     flashstorage.put("id", convertToText(id))
     control.reset()
 })
 let id = 0
+serial.setBaudRate(BaudRate.BaudRate9600)
 id = parseFloat(flashstorage.get("id"))
-led.setBrightness(32)
-serial.redirectToUSB()
 controller.initController(id)
+led.setBrightness(32)
 basic.showNumber(id)
 basic.pause(1000)
 basic.clearScreen()
@@ -40,6 +41,6 @@ basic.forever(function () {
     }
 })
 basic.forever(function () {
-    serial.writeLine("Enter ID (" + convertToText(id) + ")")
+    serial.writeLine("Set ID (" + id + "):")
     basic.pause(1000)
 })
