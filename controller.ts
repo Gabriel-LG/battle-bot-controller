@@ -28,9 +28,10 @@ namespace controller {
     //% block
     export function initController(id: number): void {
         joystickbit.initJoystickBit();
-        if (!started) control.setInterval(sendUpdate, 20, control.IntervalMode.Interval)
+        if (!(id >= 0 && id <= 41)) return; //invalid ID
         radio.setGroup(0);
-        radio.setFrequencyBand(id * 5);
+        radio.setFrequencyBand(id * 2);
+        if (!started) control.setInterval(sendUpdate, 20, control.IntervalMode.Interval)
         started = true;
     }
 }
